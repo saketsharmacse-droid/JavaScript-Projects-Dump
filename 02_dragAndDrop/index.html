@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="left">
+            <div class="list" draggable="true">
+                <img src="icon.png"> List Item 1
+            </div>
+            <div class="list" draggable="true">
+                <img src="icon.png"> List Item 2
+            </div>
+            <div class="list" draggable="true">
+                <img src="icon.png"> List Item 3
+            </div>
+            <div class="list" draggable="true">
+                <img src="icon.png"> List Item 4
+            </div>
+        </div>
+        <div id="right"></div>
+
+    </div>
+
+    <script>
+
+        let lists = document.getElementsByClassName("list");
+        //humare pas four elements hai list class ke , toh unko ek array mei store kee lenge, lists array mei.
+        let rightBox = document.getElementById("right");
+        let leftBox = document.getElementById("left");
+
+        //hum ek function bnayenge jo ki drag krega items ko between boxes.
+        for(list of lists){
+            list.addEventListener("dragstart", function(e){
+                let selected = e.target;
+                //wo jo element select kiye hai drag kiye hai wo selected variable mei store ho jayega.
+                //we will get which element is selected while dragging event.
+
+                //we have to allow it to drag over the second element , i.e. the rightbox.
+                rightBox.addEventListener('dragover', function(e){
+                    e.preventDefault(); //while dragging, it will prevent the default features.
+                });
+
+                //now we have to add the drop event.
+                rightBox.addEventListener('drop', function(e){
+                    rightBox.appendChild(selected);
+                    //selected element is added in the rightbox.
+                    //now we should empty this selected variable.
+                    selected = null;
+                });
+
+                leftBox.addEventListener('dragover', function(e){
+                    e.preventDefault(); 
+                });
+
+                
+                leftBox.addEventListener('drop', function(e){
+                    leftBox.appendChild(selected);
+                });
+
+
+            })
+        }
+
+    </script>
+</body>
+</html>
